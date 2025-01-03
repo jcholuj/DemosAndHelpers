@@ -5,4 +5,9 @@ public extension View {
     self
       .frame(width: size, height: size)
   }
+
+  func radius(_ radius: CGFloat) -> some View {
+    self
+      .clipShape(.rect(cornerRadius: radius))
+  }
 }
