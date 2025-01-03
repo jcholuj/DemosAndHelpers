@@ -1,3 +1,4 @@
+import Helpers
 import SwiftUI
 
 struct ContentState: Equatable {
@@ -86,8 +87,6 @@ private struct ResultView: View {
 
 private extension CGFloat {
   static let iconSize = 64.0
-  static let spacing200 = 16.0
-  static let spacing100 = 8.0
 }
 
 private extension String {
