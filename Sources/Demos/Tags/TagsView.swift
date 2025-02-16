@@ -4,9 +4,14 @@ import SwiftUI
 public struct TagsView: View {
   @State private var tag: String = ""
   @Binding private var tags: [String]
+  @Binding private var selectedTags: [String]
 
-  public init(tags: Binding<[String]>) {
+  public init(
+    tags: Binding<[String]>,
+    selectedTags: Binding<[String]>
+  ) {
     _tags = tags
+    _selectedTags = selectedTags
   }
 
   public var body: some View {
@@ -23,29 +28,25 @@ public struct TagsView: View {
         .foregroundStyle(Color.blue)
         .padding(.spacing100)
         .background(Color.blue.opacity(0.2))
-        .clipShape(.rect(cornerRadius: 8))
+        .clipShape(.rect(cornerRadius: .radius100))
       }
 
       if !self.tags.isEmpty {
         Divider()
           .frame(maxWidth: .infinity, alignment: .leading)
 
-        VStack(alignment: .leading) {
+        FlexibleStack(alignment: .leading) {
           ForEach(self.tags, id: \.self) { tag in
             Button(
-              action: { self.removeTag(tag) },
+              action: { self.tagTapped(tag) },
               label: {
-                HStack(spacing: .spacing100) {
-                  Text(tag)
-
-                  Image(systemName: "xmark")
-                }
-                .font(.callout)
-                .padding(.vertical, .spacing100)
-                .padding(.horizontal, .spacing150)
-                .foregroundStyle(Color.blue)
-                .background(Color.blue.opacity(0.2))
-                .clipShape(.rect(cornerRadius: 8))
+                Text(tag)
+                  .font(.footnote.weight(.semibold))
+                  .padding(.vertical, .spacing75)
+                  .padding(.horizontal, .spacing125)
+                  .foregroundStyle(self.selectedTags.contains(tag) ? Color.white : Color.blue)
+                  .background(Color.blue.opacity(self.selectedTags.contains(tag) ? 1.0 : 0.2))
+                  .clipShape(.rect(cornerRadius: .radius100))
               }
             )
           }
@@ -64,7 +65,11 @@ private extension TagsView {
     self.tag = ""
   }
 
-  func removeTag(_ tag: String) {
-    self.tags.removeAll { $0 == tag }
+  func tagTapped(_ tag: String) {
+    if self.selectedTags.contains(tag) {
+      self.selectedTags.removeAll { $0 == tag }
+    } else {
+      self.selectedTags.append(tag)
+    }
   }
 }
