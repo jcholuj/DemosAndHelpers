@@ -38,11 +38,11 @@ public struct FlexibleStack: Layout {
     for row in layout.rows {
       let rowXOffset = (bounds.width - row.frame.width) * self.alignment.horizontal.percentage
       for item in row.items {
-        let xPos = rowXOffset + row.frame.minX + item.xOffset + bounds.minX
+        let xPosition = rowXOffset + row.frame.minX + item.xOffset + bounds.minX
         let rowYAlignment = (row.frame.height - subviews[item.index].sizeThatFits(.unspecified).height) *
         self.alignment.vertical.percentage
-        let yPos = row.frame.minY + rowYAlignment + bounds.minY
-        subviews[item.index].place(at: CGPoint(x: xPos, y: yPos), anchor: .topLeading, proposal: .unspecified)
+        let yPosition = row.frame.minY + rowYAlignment + bounds.minY
+        subviews[item.index].place(at: CGPoint(x: xPosition, y: yPosition), anchor: .topLeading, proposal: .unspecified)
       }
     }
   }
